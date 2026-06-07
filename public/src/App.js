@@ -140,7 +140,6 @@ export default function App() {
         ::placeholder{color:#b8a898;}
       `}</style>
 
-      {/* HEADER */}
       <header style={{borderBottom:"1px solid #e8dfc8",background:"#fffdf7",position:"sticky",top:0,zIndex:100}}>
         <div style={{maxWidth:960,margin:"0 auto",padding:"0 20px",height:64,display:"flex",alignItems:"center",justifyContent:"space-between"}}>
           <div style={{display:"flex",alignItems:"center",gap:10}}>
@@ -168,7 +167,6 @@ export default function App() {
         </div>
       </header>
 
-      {/* AUTH */}
       {screen !== "app" && (
         <div style={{maxWidth:420,margin:"70px auto",padding:"0 20px"}}>
           <div style={{textAlign:"center",marginBottom:32}}>
@@ -209,7 +207,6 @@ export default function App() {
         </div>
       )}
 
-      {/* APP */}
       {screen==="app" && user && (
         <main style={{maxWidth:960,margin:"0 auto",padding:"28px 20px"}}>
           <div style={{textAlign:"center",marginBottom:32}}>
@@ -299,7 +296,6 @@ export default function App() {
         </main>
       )}
 
-      {/* PAYWALL */}
       {showPaywall&&(
         <div onClick={()=>setShowPaywall(false)} style={{position:"fixed",inset:0,background:"#00000060",display:"flex",alignItems:"center",justifyContent:"center",zIndex:999,padding:20}}>
           <div onClick={e=>e.stopPropagation()} style={{background:"#fffdf7",borderRadius:24,padding:36,maxWidth:390,width:"100%",textAlign:"center",border:"1px solid #e8dfc8"}}>
