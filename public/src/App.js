@@ -50,6 +50,7 @@ export default function App() {
   const [screen, setScreen]       = useState("login");
   const [email, setEmail]         = useState("");
   const [password, setPassword]   = useState("");
+  const [confirm, setConfirm]     = useState("");
   const [authError, setAuthError] = useState("");
   const [authMsg, setAuthMsg]     = useState("");
   const [session, setSession]     = useState(null);
@@ -68,6 +69,7 @@ export default function App() {
     setAuthError("");
     if (!email || !password) { setAuthError("Remplis tous les champs."); return; }
     if (password.length < 6) { setAuthError("Mot de passe : 6 caractères minimum."); return; }
+    if (password !== confirm) { setAuthError("Les mots de passe ne correspondent pas."); return; }
     if (USERS[email]) { setAuthError("Ce compte existe déjà. Connecte-toi."); return; }
     USERS[email] = { password, isPro: false, used: 0, history: [] };
     setAuthMsg("✅ Compte créé ! Tu peux te connecter.");
@@ -86,7 +88,7 @@ export default function App() {
 
   function logout() {
     setSession(null); setScreen("login"); setResult("");
-    setEmail(""); setPassword(""); setAuthError(""); setAuthMsg("");
+    setEmail(""); setPassword(""); setConfirm(""); setAuthError(""); setAuthMsg("");
   }
 
   async function generate() {
@@ -190,6 +192,11 @@ export default function App() {
             <input value={password} onChange={e=>setPassword(e.target.value)} type="password" placeholder="Mot de passe (min. 6 caractères)"
               onKeyDown={e=>e.key==="Enter"&&(screen==="login"?handleLogin():handleSignup())}
               style={{padding:"11px 14px",border:"1.5px solid #e8dfc8",borderRadius:10,fontSize:14,fontFamily:"Jost,sans-serif",color:"#2C1810",background:"#fafaf8"}}/>
+            {screen==="signup" && (
+              <input value={confirm} onChange={e=>setConfirm(e.target.value)} type="password" placeholder="Confirmer le mot de passe"
+                onKeyDown={e=>e.key==="Enter"&&handleSignup()}
+                style={{padding:"11px 14px",border:`1.5px solid ${confirm && confirm!==password?"#c0392b":"#e8dfc8"}`,borderRadius:10,fontSize:14,fontFamily:"Jost,sans-serif",color:"#2C1810",background:"#fafaf8"}}/>
+            )}
             {authError && <p style={{color:"#c0392b",fontSize:12,textAlign:"center",background:"#c0392b10",padding:"8px",borderRadius:8}}>{authError}</p>}
             <button onClick={screen==="login"?handleLogin:handleSignup} style={{
               padding:"13px",background:"linear-gradient(135deg,#7A1F1F,#9B8240)",
